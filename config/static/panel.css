@@ -1,0 +1,24 @@
+html {
+    --panel-height: 60px;
+    --panel-bg-color: #f5f5f5;
+    --panel-btn-size: 26px;
+    --panel-k: 1;
+}
+
+
+#panel {
+    background-color: var(--panel-bg-color);
+    width: 100%;
+    height: var(--panel-height);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.panel-btn {
+    height: var(--panel-btn-size);
+    width: var(--panel-btn-size);
+    margin-top: 4px;
+    background-size: var(--panel-btn-size);
+}

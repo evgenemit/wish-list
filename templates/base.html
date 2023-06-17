@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Список желаний{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'panel.css' %}">
+    <style>
+        #home {
+            background-image: url({% static 'images/home_1.png' %});
+        }
+
+        #add-wish {
+            background-image: url({% static 'images/add_1.png' %});
+            height: calc(var(--panel-btn-size) * var(--panel-k));
+            width: calc(var(--panel-btn-size) * var(--panel-k));
+            background-size: calc(var(--panel-btn-size) * var(--panel-k));
+        }
+
+        #profile {
+            background-image: url({% static 'images/profile_1.png' %});
+        }
+    </style>
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    
+    <!-- Основной контент -->
+    <div class="wrapper-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% include 'inc/_panel.html' %}
+    
+    <script src="{% static 'jquery.min.js' %}"></script>
+    {% block javascript %}
+    {% endblock %}
+
+</body>
+</html>

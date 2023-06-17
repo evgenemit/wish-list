@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список желаний{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'content.css' %}">
+<link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% csrf_token %}
+    <input type="text" id="user-pk" value="{{ request.user.pk }}" hidden>
+    <div class="text-center mt-5">
+        <h1>Мой список желаний</h1>
+    </div>
+    <div id="list-empty">
+        <div class="text-secondary text-center d-flex flex-column justify-content-between h-100">
+            <div class="list-preloaders">
+                <div class="list-preloader rounded"></div>
+                <div class="list-preloader rounded"></div>
+                <div class="list-preloader rounded"></div>
+            </div>
+            <div id="empty-menu" style="display: none;">
+                <div class="d-flex flex-column">
+                    <p>Твой список желаний пока пуст, пора это исправить!</p>
+                    <a href="{% url 'add' %}" id="add-btn" class="btn btn-secondary">Добавить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wishlist" style="display: none">
+        <div id="wishes" class="d-flex flex-column">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'home.js' %}"></script>
+{% endblock %}

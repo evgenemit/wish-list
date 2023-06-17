@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Добавить желание{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'content.css' %}">
+<link rel="stylesheet" href="{% static 'add.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% csrf_token %}
+    <input type="text" id="user-pk" value="{{ request.user.pk }}" hidden>
+    <input type="text" id="wishlist-pk" value="{{ request.user.wishlist.pk }}" hidden>
+    <div class="text-center mt-5">
+        <h1>Добавить желание</h1>
+    </div>
+    <div id="list-empty">
+        <form class="text-secondary text-center d-flex flex-column justify-content-between h-100">
+            <div>
+                <input id="text" type="text" placeholder="Текст" class="form-control mb-2">
+                <textarea id="about" class="form-control mb-2" name="" id="" cols="30" rows="5" placeholder="Описание"></textarea>
+                <input id="link" class="form-control mb-3" type="url" placeholder="Ссылка">
+                <div id="error" style="display: none">
+                    <small>Поле текст не должно быть пустым!</small>
+                </div>
+            </div>
+            <div id="empty-menu">
+                <div>
+                    <button class="btn btn-secondary" id="add-btn">Добавить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'add.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,17 @@
+form {
+    padding: 0;
+}
+
+input, textarea {
+    font-size: 18px !important;
+    box-shadow: none !important;
+}
+
+#error small {
+    color:crimson;
+    font-size: 16px;
+}
+
+#error {
+    padding-bottom: 10px;
+}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'content.css' %}">
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% csrf_token %}
+    <input type="text" id="user-pk" value="{{ request.user.pk }}" hidden>
+    <div class="text-center mt-5">
+        <h1>Профиль</h1>
+    </div>
+    <div id="list-empty">
+        <div class="d-flex flex-column justify-content-between h-100">
+            <div>
+                <p>API Токен:</p>
+                <p class="text-secondary border main-wish rounded mt-2 mb-3" id="token">{{ token }}</p>
+                <p>Ссылка на твой список желаний:</p>
+                <p class="text-secondary border main-wish rounded mt-2"><a id="link" class="text-secondary">...</a></p>
+            </div>
+            <div id="empty-menu">
+                <div>
+                    <a href="{% url 'logout' %}" class="btn btn-secondary" id="add-btn">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'profile.js' %}"></script>
+{% endblock %}
