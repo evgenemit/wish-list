@@ -78,7 +78,7 @@ $('#wishlist').on('click', '.wish-clicked', function () {
 })
 
 
-$('#wishlist').on('click', '.btn', function () {
+$('#wishlist').on('click', '.btnd', function () {
     let wish_id = $(this).attr('id').slice(9)
     if ($(this).hasClass('wish-btn-busy')) {
         $.ajax({
