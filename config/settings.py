@@ -1,12 +1,16 @@
 import os.path
+import environ
 from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-n^b3lql51=(q3b_a^0mw6vzt_$27syfqe^i-&ztfhcf5)7lz2b'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://da74-37-215-11-178.ngrok-free.app']
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = (os.getenv('DEBUG') == 'True')
+ALLOWED_HOSTS = ['127.0.0.1', os.getenv('ALLOWED_HOST_2')]
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1']
 AUTH_USER_MODEL = 'user.CustomUser'
 
 
@@ -62,7 +66,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
+            'hosts': [(os.getenv('REDIS_HOST'), os.getenv('REDIS_PORT'))],
         },
     },
 }
@@ -70,7 +74,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, os.getenv('DB_NAME')),
     }
 }
 
