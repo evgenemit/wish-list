@@ -17,9 +17,12 @@ def wishlist_exists(wishlist_id: str) -> dict:
     try:
         if WishList.objects.filter(pk=wishlist_id).exists():
             return success
-        error['message'] = f'Списка желаний с wishlist_id={wishlist_id} не существует.'
+        error['message'] = (
+            f'Списка желаний с wishlist_id={wishlist_id}'
+            ' не существует.'
+        )
         return error
-    except ValueError as e:
+    except ValueError:
         error['message'] = 'Недопустимый формат параметра wishlist_id.'
         return error
 
@@ -36,12 +39,17 @@ def create_wishlist(user_id: str) -> dict:
             return u_exists
         # проверяем существует ли список
         if WishList.objects.filter(user__pk=user_id).exists():
-            error['message'] = f'Список желаний пользователя c used_id={user_id} уже существует.'
+            error['message'] = (
+                f'Список желаний пользователя c used_id={user_id}'
+                ' уже существует.'
+            )
             return error
-        wishlist = WishList.objects.create(user=CustomUser.objects.get(pk=user_id))
+        wishlist = WishList.objects.create(
+            user=CustomUser.objects.get(pk=user_id)
+        )
         success['wishlist'] = WishListSerializer(wishlist).data
         return success
-    except Exception as e:
+    except Exception:
         return error
 
 
@@ -57,7 +65,10 @@ def get_whislist(user_id: str) -> dict:
         # проверяем существует ли список
         wishlist = WishList.objects.filter(user__pk=user_id)
         if not wishlist.exists():
-            error['message'] = f'Список желаний пользователя c used_id={user_id} не существует.'
+            error['message'] = (
+                f'Список желаний пользователя c used_id={user_id}'
+                ' не существует.'
+            )
             return error
         wishlist = wishlist.first()
         success['wishlist'] = WishListSerializer(wishlist).data
@@ -65,7 +76,7 @@ def get_whislist(user_id: str) -> dict:
         for wish in wishlist.wishes.all().order_by('-pk'):
             success['wishlist']['wishes'].append(WishSerializer(wish).data)
         return success
-    except Exception as e:
+    except Exception:
         return error
 
 
@@ -80,5 +91,5 @@ def delete_wishlist(user_id: str):
             return u_exists
         WishList.objects.filter(user__pk=user_id).delete()
         return success
-    except Exception as e:
+    except Exception:
         return error

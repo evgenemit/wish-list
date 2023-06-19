@@ -16,6 +16,6 @@ def user_exists(user_id: str) -> dict:
             return success
         error['message'] = f'Пользователя с user_id={user_id} не существует.'
         return error
-    except ValueError as e:
+    except ValueError:
         error['message'] = 'Недопустимый формат параметра user_id.'
         return error

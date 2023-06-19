@@ -1,8 +1,6 @@
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from .wishlist_api import WishlistAPIView
-from .base_api import CustomGenericAPIView
 
 
 class UserWishlistAPIView(WishlistAPIView):

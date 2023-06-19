@@ -1,8 +1,14 @@
 from rest_framework.views import exception_handler
-from rest_framework.exceptions import NotAuthenticated, PermissionDenied, ParseError, AuthenticationFailed
+from rest_framework.exceptions import (
+    NotAuthenticated,
+    PermissionDenied,
+    ParseError,
+    AuthenticationFailed
+)
 from rest_framework.response import Response
 
 from .services.response import ERROR
+
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)

@@ -1,10 +1,8 @@
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
 
 from .serializers import WishListSerializer
 from .base_api import CustomGenericAPIView
 from .services import wishlist_services
-from .services.response import ERROR
 
 
 class WishlistAPIView(CustomGenericAPIView):

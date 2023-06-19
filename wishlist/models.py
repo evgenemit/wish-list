@@ -8,7 +8,12 @@ class Wish(models.Model):
     about = models.TextField(null=True, blank=True, verbose_name='Описание')
     is_busy = models.BooleanField(default=False, verbose_name='Занято?')
     link = models.URLField(null=True, blank=True, verbose_name='Ссылка')
-    wishlist = models.ForeignKey('WishList', on_delete=models.CASCADE, related_name='wishes', verbose_name='Список желаний')
+    wishlist = models.ForeignKey(
+        'WishList',
+        on_delete=models.CASCADE,
+        related_name='wishes',
+        verbose_name='Список желаний'
+    )
 
     class Meta:
         verbose_name = 'Желание'
@@ -21,7 +26,12 @@ class Wish(models.Model):
 class WishList(models.Model):
     """Список желаний"""
 
-    user = models.OneToOneField('user.CustomUser', on_delete=models.CASCADE, related_name='wishlist', verbose_name='Пользователь')
+    user = models.OneToOneField(
+        'user.CustomUser',
+        on_delete=models.CASCADE,
+        related_name='wishlist',
+        verbose_name='Пользователь'
+    )
 
     class Meta:
         verbose_name = 'Список желаний'

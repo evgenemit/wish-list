@@ -46,14 +46,24 @@ class WishlistConsumer(WebsocketConsumer):
             if res['status'] == 'ok':
                 is_error = False
                 async_to_sync(self.channel_layer.group_send)(
-                    self.wishlist_group_name, {'type': 'wish_book_unbook', 'wish_id': wish_id, 'is_busy': True}
+                    self.wishlist_group_name,
+                    {
+                        'type': 'wish_book_unbook',
+                        'wish_id': wish_id,
+                        'is_busy': True
+                    }
                 )
         elif code == 'unbook':
             res = wish_services.unbook_wish(wish_id)
             if res['status'] == 'ok':
                 is_error = False
                 async_to_sync(self.channel_layer.group_send)(
-                    self.wishlist_group_name, {'type': 'wish_book_unbook', 'wish_id': wish_id, 'is_busy': False}
+                    self.wishlist_group_name,
+                    {
+                        'type': 'wish_book_unbook',
+                        'wish_id': wish_id,
+                        'is_busy': False
+                    }
                 )
         elif code == 'all_wishes':
             # получение списка всех желаний
@@ -62,18 +72,28 @@ class WishlistConsumer(WebsocketConsumer):
             if res['status'] == 'ok':
                 is_error = False
                 async_to_sync(self.channel_layer.group_send)(
-                    self.wishlist_group_name, {'type': 'get_wishlist', 'wishes': res['wishlist']['wishes']}
+                    self.wishlist_group_name,
+                    {
+                        'type': 'get_wishlist',
+                        'wishes': res['wishlist']['wishes']
+                    }
                 )
         elif code == 'add_wish':
             wishlist_id = text_data_json.get('wishlist_id', None)
             w_text = text_data_json.get('text', None)
             w_about = text_data_json.get('about', None)
             w_link = text_data_json.get('link', None)
-            res = wish_services.create_wish(wishlist_id, w_text, w_about, w_link)
+            res = wish_services.create_wish(
+                wishlist_id, w_text, w_about, w_link
+            )
             if res['status'] == 'ok':
                 is_error = False
                 async_to_sync(self.channel_layer.group_send)(
-                    self.wishlist_group_name, {'type': 'add_wish', 'wish': res['wish']}
+                    self.wishlist_group_name,
+                    {
+                        'type': 'add_wish',
+                        'wish': res['wish']
+                    }
                 )
         elif code == 'delete_wish':
             wish_id = text_data_json.get('wish_id', None)
@@ -81,7 +101,11 @@ class WishlistConsumer(WebsocketConsumer):
             if res['status'] == 'ok':
                 is_error = False
                 async_to_sync(self.channel_layer.group_send)(
-                    self.wishlist_group_name, {'type': 'delete_wish', 'wish_id': wish_id}
+                    self.wishlist_group_name,
+                    {
+                        'type': 'delete_wish',
+                        'wish_id': wish_id
+                    }
                 )
 
         # если произошла ошибка, возвращаем текст
@@ -90,12 +114,13 @@ class WishlistConsumer(WebsocketConsumer):
                 res['message'] = 'Не передан параметр code.'
             self.send(text_data=json.dumps(res))
 
-
     def wish_book_unbook(self, event):
         wish_id = event['wish_id']
         is_busy = event['is_busy']
 
-        self.send(text_data=json.dumps({'code': 'book_unbook', 'wish_id': wish_id, 'is_busy': is_busy}))
+        self.send(text_data=json.dumps(
+            {'code': 'book_unbook', 'wish_id': wish_id, 'is_busy': is_busy}
+        ))
 
     def get_wishlist(self, event):
         wishes = event['wishes']
@@ -110,4 +135,6 @@ class WishlistConsumer(WebsocketConsumer):
     def delete_wish(self, event):
         wish_id = event['wish_id']
 
-        self.send(text_data=json.dumps({'code': 'delete_wish', 'wish_id': wish_id}))
+        self.send(text_data=json.dumps(
+            {'code': 'delete_wish', 'wish_id': wish_id}
+        ))

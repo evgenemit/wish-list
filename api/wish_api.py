@@ -3,7 +3,6 @@ from rest_framework.permissions import AllowAny
 
 from .base_api import CustomGenericAPIView
 from .services import wish_services
-from .services.response import ERROR, SUCCESS
 from .serializers import WishSerializer
 
 
@@ -24,7 +23,9 @@ class WishAPIView(CustomGenericAPIView):
         w_text = request.data.get('text', None)
         w_about = request.data.get('about', None)
         w_link = request.data.get('link', None)
-        return Response(wish_services.create_wish(wishlist_id, w_text, w_about, w_link))
+        return Response(
+            wish_services.create_wish(wishlist_id, w_text, w_about, w_link)
+        )
 
     def delete(self, request):
         """Удаляет желание"""

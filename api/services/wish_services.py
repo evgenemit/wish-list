@@ -7,7 +7,7 @@ from .wishlist_services import wishlist_exists
 
 def wish_exists(wish_id: str) -> dict:
     """Провееряет существует ли желание"""
-    
+
     error = ERROR.copy()
     success = SUCCESS.copy()
     if wish_id is None:
@@ -20,11 +20,17 @@ def wish_exists(wish_id: str) -> dict:
             return error
         else:
             return success
-    except ValueError as e:
+    except ValueError:
         error['message'] = 'Недопустимый формат параметра wish_id.'
         return error
 
-def create_wish(wishlist_id: str, w_text: str, w_about: str, w_link: str) -> dict:
+
+def create_wish(
+    wishlist_id: str,
+    w_text: str,
+    w_about: str,
+    w_link: str
+) -> dict:
     """Создание желания"""
 
     error = ERROR.copy()
@@ -34,7 +40,8 @@ def create_wish(wishlist_id: str, w_text: str, w_about: str, w_link: str) -> dic
         wl_exists = wishlist_exists(wishlist_id)
         if wl_exists['status'] == 'error':
             return wl_exists
-        # проверяем переданы ли остальные параметры (только текст, остальные не обязательны)
+        # проверяем переданы ли остальные параметры
+        # (только текст, остальные не обязательны)
         if w_text is None or w_text == '':
             error['message'] = 'Не передан параметр text.'
             return error
@@ -46,8 +53,9 @@ def create_wish(wishlist_id: str, w_text: str, w_about: str, w_link: str) -> dic
         )
         success['wish'] = WishSerializer(wish).data
         return success
-    except Exception as e:
+    except Exception:
         return error
+
 
 def get_wish(wish_id: str) -> dict:
     """Чтение желания"""
@@ -61,8 +69,9 @@ def get_wish(wish_id: str) -> dict:
         wish = Wish.objects.get(pk=wish_id)
         success['wish'] = WishSerializer(wish).data
         return success
-    except Exception as e:
+    except Exception:
         return error
+
 
 def delete_wish(wish_id: str) -> dict:
     """Удление желания"""
@@ -75,8 +84,9 @@ def delete_wish(wish_id: str) -> dict:
             return w_exists
         Wish.objects.filter(pk=wish_id).delete()
         return success
-    except Exception as e:
+    except Exception:
         return error
+
 
 def book_wish(wish_id: str) -> dict:
     """Бронирование желания другими пользователями"""
@@ -91,8 +101,9 @@ def book_wish(wish_id: str) -> dict:
         w.is_busy = True
         w.save()
         return success
-    except Exception as e:
+    except Exception:
         return error
+
 
 def unbook_wish(wish_id: str) -> dict:
     """Отмена бронирования желания другими пользователями"""
@@ -107,5 +118,5 @@ def unbook_wish(wish_id: str) -> dict:
         w.is_busy = False
         w.save()
         return success
-    except Exception as e:
+    except Exception:
         return error

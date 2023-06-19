@@ -9,7 +9,7 @@ from .permissions import IsOwner
 class CustomGenericAPIView(GenericAPIView):
     """Кастомный GenericAPIView"""
 
-    permission_classes = [IsAdminUser|IsOwner]
+    permission_classes = [IsAdminUser | IsOwner]
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         error = ERROR.copy()

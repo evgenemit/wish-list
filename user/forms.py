@@ -61,4 +61,3 @@ class RegisterForm(UserCreationForm):
                 'autocapitalize': 'none',
             }),
         }
-
