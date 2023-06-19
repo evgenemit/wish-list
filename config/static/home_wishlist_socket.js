@@ -25,11 +25,9 @@ function socket_onmessage (e) {
         if (is_busy) {
             $(`#wish-m-${wish_id} .main-wish`).addClass('wish-busy')
             $(`#wish-${wish_id} .busy-text`).fadeIn(0)
-            $(`#wish-btn-${wish_id}`).text('Отменить').addClass('wish-btn-busy')
         } else {
             $(`#wish-m-${wish_id} .main-wish`).removeClass('wish-busy')
             $(`#wish-${wish_id} .busy-text`).fadeOut(0)
-            $(`#wish-btn-${wish_id}`).text('Забронировать').removeClass('wish-btn-busy')
         }
         $(`#wish-s-${wish_id}`).fadeOut(0)
         wish_clicked.splice(wish_clicked.indexOf(wish_id), 1)
@@ -79,15 +77,9 @@ function get_wishlist () {
 
 // нажатие на кнопку управления желанием
 $('#wishlist').on('click', '.btn', function () {
-    const wish_id = $(this).attr('id').slice(9)
-    let code = ''
-    if ($(this).hasClass('wish-btn-busy')) {
-        code = 'unbook'
-    } else {
-        code = 'book'
-    }
+    let wish_id = $(this).attr('id').slice(9)
     wishlist_socket.send(JSON.stringify({
         'wish_id': wish_id,
-        'code': code,
+        'code': 'delete_wish',
     }))
 })

@@ -62,7 +62,7 @@ def get_whislist(user_id: str) -> dict:
         wishlist = wishlist.first()
         success['wishlist'] = WishListSerializer(wishlist).data
         success['wishlist']['wishes'] = []
-        for wish in wishlist.wishes.all():
+        for wish in wishlist.wishes.all().order_by('-pk'):
             success['wishlist']['wishes'].append(WishSerializer(wish).data)
         return success
     except Exception as e:
